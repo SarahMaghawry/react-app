@@ -1,0 +1,49 @@
+/* Before Code Refactoring of taskController.js file
+
+// request to READ ALL tasks (GET ALL tasks)
+exports.list_all_tasks = (req, res) => {
+  task.find({}, (err, tasks) => {
+    if (err) res.send(err.message);
+    res.json(tasks);
+  });
+};
+
+// GET by ID: request to READ one task by taskId
+exports.read_a_task = (req, res) => {
+  task.findById(req.params.taskId, (err, task) => {
+    if (err) res.send(err.message);
+    res.json(task);
+  });
+};
+
+// POST: request to CREATE new task
+exports.create_a_task = (req, res) => {
+  const newTask = new task(req.body);
+  newTask.save((err, task) => {
+    if (err) res.send(err.message);
+    res.json(task);
+  });
+};
+
+// PUT: request to UPDATE one task by ID
+exports.update_a_task = (req, res) => {
+  task.findOneAndUpdate(
+    { _id: req.params.taskId },
+    req.body,
+    { new: true },
+    (err, task) => {
+      if (err) res.send(err.message);
+      res.json(task);
+    });
+};
+
+// DELET: request to DELETE one task by ID
+exports.delete_a_task = (req, res) => {
+  task.deleteOne({ _id: req.params.taskId }, (err) => {
+    if (err) res.send(err.message);
+    res.json({
+      message: "Task successfully deleted.",
+      _id: req.params.taskId,
+    });
+  });
+};
